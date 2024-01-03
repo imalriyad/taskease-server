@@ -31,7 +31,14 @@ async function run() {
       const result = await taskCollection.find(query).toArray();
       res.send(result);
     });
-    
+
+    app.delete("/api/v1/delete-task/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await taskCollection.deleteOne(query);
+      res.send(result);
+    });
+
     app.post("/api/v1/create-task", async (req, res) => {
       const task = req.body;
       const result = await taskCollection.insertOne(task);
